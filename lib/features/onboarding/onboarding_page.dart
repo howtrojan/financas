@@ -1,7 +1,7 @@
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
+import 'package:financas/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -35,18 +35,12 @@ class OnboardingPage extends StatelessWidget {
                 Text('Gaste com inteligência',
                     style: AppTextStyles.mediumText
                         .copyWith(color: AppColors.greenLightTwo)),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                ElevatedButton(
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: PrimaryButton(
+                    text: 'Entrar',
                     onPressed: () {},
-                    child: Text(
-                      'Entrar',
-                      style: AppTextStyles.smallText
-                          .copyWith(color: AppColors.white),
-                    )),
-                const SizedBox(
-                  height: 20.0,
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
