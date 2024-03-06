@@ -15,20 +15,23 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: const BorderRadius.all(Radius.circular(30)),
+      borderRadius: BorderRadius.all(
+          Radius.circular(MediaQuery.of(context).size.height * 0.030)),
       child: Ink(
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-            gradient: LinearGradient(colors: [
+        height: MediaQuery.of(context).size.height * 0.050,
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+                Radius.circular(MediaQuery.of(context).size.height * 0.030)),
+            gradient: const LinearGradient(colors: [
               AppColors.greenLightOne,
               AppColors.greenLightTwo,
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: InkWell(
-          borderRadius: const BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(
+              Radius.circular(MediaQuery.of(context).size.height * 0.030)),
           onTap: onPressed,
-          child: Container(
-            alignment: Alignment.center,
-            height: 64,
+          child: Align(
             child: Text(
               text,
               style: AppTextStyles.buttonText.copyWith(color: AppColors.white),
