@@ -1,11 +1,9 @@
-import 'dart:math';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:financas/widgets/custom_text_button.dart';
+import 'package:flutter/material.dart';
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/primary_button.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -27,6 +25,7 @@ class OnboardingPage extends StatelessWidget {
           ),
           Expanded(
             child: Container(
+              alignment: Alignment.center,
               height: MediaQuery.of(context).size.height * 0.4,
               color: AppColors.white,
               child: Column(children: [
@@ -49,24 +48,23 @@ class OnboardingPage extends StatelessWidget {
                     onPressed: () {},
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                CustomTextButton(
+                  onPressed: () => {},
                   children: [
-                    RichText(
-                        text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: 'Não tem conta?',
-                            style: AppTextStyles.smallText
-                                .copyWith(color: AppColors.grayLight)),
-                        TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => {},
-                            text: 'Cadastre-se',
-                            style: AppTextStyles.smallText
-                                .copyWith(color: AppColors.greenLightTwo)),
-                      ],
-                    )),
+                    Text(
+                      'Não tem conta?',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.smallText.copyWith(
+                        color: AppColors.grayLight,
+                      ),
+                    ),
+                    Text(
+                      'Cadastre-se',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.smallText.copyWith(
+                        color: AppColors.greenLightOne,
+                      ),
+                    ),
                   ],
                 ),
               ]),
