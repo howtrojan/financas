@@ -26,8 +26,19 @@ class SignUpPage extends StatelessWidget {
               style: AppTextStyles.mediumText
                   .copyWith(color: AppColors.greenLightTwo)),
           Image.asset('assets/images/signUp.png'),
-          TextFormField(),
-          const TextField(),
+          Form(
+              child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                    labelText: "Seu Nome",
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: AppColors.greenLightOne)),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red))),
+              ),
+            ],
+          )),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.height * 0.032,
