@@ -1,4 +1,5 @@
 import 'package:financas/widgets/custom_text_form_field.dart';
+import 'package:financas/widgets/password_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
@@ -21,7 +22,7 @@ class SignUpPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.mediumText
                   .copyWith(color: AppColors.greenLightTwo)),
-          Text('Seus Gastos',
+          Text('seus gastos',
               textAlign: TextAlign.center,
               style: AppTextStyles.mediumText
                   .copyWith(color: AppColors.greenLightTwo)),
@@ -32,6 +33,14 @@ class SignUpPage extends StatelessWidget {
               CustomFormField(
                 labelText: "Seu Usuario",
                 hintText: "email@email.com",
+              ),
+              PasswordFormFild(
+                labelText: "Escolha sua senha",
+                hintText: "******",
+              ),
+              PasswordFormFild(
+                labelText: "Confirme sua senha",
+                hintText: "******",
               ),
             ],
           )),

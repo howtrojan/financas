@@ -9,6 +9,8 @@ class CustomFormField extends StatefulWidget {
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
   final TextInputType? textInputType;
+  final Widget? suffixIcon;
+  final bool? obscureText;
 
   const CustomFormField({
     super.key,
@@ -18,6 +20,8 @@ class CustomFormField extends StatefulWidget {
     this.textCapitalization,
     this.controller,
     this.textInputType,
+    this.suffixIcon,
+    this.obscureText,
   });
 
   @override
@@ -34,11 +38,13 @@ class _CustomFormFieldState extends State<CustomFormField> {
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: TextFormField(
+        obscureText: widget.obscureText ?? false,
         keyboardType: widget.textInputType,
         controller: widget.controller,
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.none,
         decoration: InputDecoration(
+            suffixIcon: widget.suffixIcon,
             labelText: widget.labelText.toUpperCase(),
             labelStyle: AppTextStyles.smallText.copyWith(color: AppColors.gray),
             hintText: widget.hintText,
