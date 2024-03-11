@@ -1,9 +1,9 @@
+import 'package:financas/widgets/custom_text_form_field.dart';
+import 'package:flutter/material.dart';
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/custom_text_button.dart';
 import 'package:financas/widgets/primary_button.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -26,16 +26,12 @@ class SignUpPage extends StatelessWidget {
               style: AppTextStyles.mediumText
                   .copyWith(color: AppColors.greenLightTwo)),
           Image.asset('assets/images/signUp.png'),
-          Form(
+          const Form(
               child: Column(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                    labelText: "Seu Nome",
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.greenLightOne)),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red))),
+              CustomFormField(
+                labelText: "Seu Usuario",
+                hintText: "email@email.com",
               ),
             ],
           )),
@@ -56,7 +52,7 @@ class SignUpPage extends StatelessWidget {
                 'Não tem conta?',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.smallText.copyWith(
-                  color: AppColors.grayLight,
+                  color: AppColors.darkGrey,
                 ),
               ),
               Text(

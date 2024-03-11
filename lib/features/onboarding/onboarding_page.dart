@@ -54,7 +54,7 @@ class OnboardingPage extends StatelessWidget {
                       'Não tem conta?',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.smallText.copyWith(
-                        color: AppColors.grayLight,
+                        color: AppColors.darkGrey,
                       ),
                     ),
                     Text(
