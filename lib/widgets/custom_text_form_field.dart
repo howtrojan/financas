@@ -1,6 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
-import 'package:flutter/material.dart';
 
 class CustomFormField extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
@@ -11,6 +14,8 @@ class CustomFormField extends StatefulWidget {
   final TextInputType? textInputType;
   final Widget? suffixIcon;
   final bool? obscureText;
+  final List<TextInputFormatter>? inputFormatters;
+  final FormFieldValidator<String>? validator;
 
   const CustomFormField({
     super.key,
@@ -22,6 +27,8 @@ class CustomFormField extends StatefulWidget {
     this.textInputType,
     this.suffixIcon,
     this.obscureText,
+    this.inputFormatters,
+    this.validator,
   });
 
   @override
@@ -38,6 +45,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: TextFormField(
+        validator: widget.validator,
+        inputFormatters: widget.inputFormatters,
         obscureText: widget.obscureText ?? false,
         keyboardType: widget.textInputType,
         controller: widget.controller,
@@ -49,9 +58,12 @@ class _CustomFormFieldState extends State<CustomFormField> {
             labelStyle: AppTextStyles.smallText.copyWith(color: AppColors.gray),
             hintText: widget.hintText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            errorBorder: defaultBorder,
+            errorBorder: const OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: Colors.red), // Borda vermelha para erro
+            ),
             focusedErrorBorder: defaultBorder.copyWith(
-              borderSide: const BorderSide(color: AppColors.greenLightOne),
+              borderSide: const BorderSide(color: AppColors.primary),
             ),
             enabledBorder: defaultBorder.copyWith(
               borderSide: const BorderSide(color: AppColors.darkGrey),

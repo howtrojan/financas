@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/primary_button.dart';
-import 'package:flutter/widgets.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -32,11 +31,11 @@ class OnboardingPage extends StatelessWidget {
                 Text('Economize mais',
                     textAlign: TextAlign.center,
                     style: AppTextStyles.mediumText
-                        .copyWith(color: AppColors.greenLightTwo)),
+                        .copyWith(color: AppColors.secundary)),
                 Text('Gaste com inteligência',
                     textAlign: TextAlign.center,
                     style: AppTextStyles.mediumText
-                        .copyWith(color: AppColors.greenLightTwo)),
+                        .copyWith(color: AppColors.primary)),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: MediaQuery.of(context).size.height * 0.032,
@@ -61,7 +60,7 @@ class OnboardingPage extends StatelessWidget {
                       'Cadastre-se',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.smallText.copyWith(
-                        color: AppColors.greenLightOne,
+                        color: AppColors.primary,
                       ),
                     ),
                   ],

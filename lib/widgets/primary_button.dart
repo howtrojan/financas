@@ -24,8 +24,8 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.all(
                 Radius.circular(MediaQuery.of(context).size.height * 0.030)),
             gradient: const LinearGradient(colors: [
-              AppColors.greenLightOne,
-              AppColors.greenLightTwo,
+              AppColors.primary,
+              AppColors.secundary,
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: InkWell(
           borderRadius: BorderRadius.all(

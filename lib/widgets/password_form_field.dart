@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
-import 'package:flutter/material.dart';
 
 class PasswordFormFild extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
@@ -9,6 +11,7 @@ class PasswordFormFild extends StatefulWidget {
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
   final TextInputType? textInputType;
+  final FormFieldValidator<String>? validator;
 
   const PasswordFormFild({
     super.key,
@@ -18,6 +21,7 @@ class PasswordFormFild extends StatefulWidget {
     this.textCapitalization,
     this.controller,
     this.textInputType,
+    this.validator,
   });
 
   @override
@@ -33,6 +37,7 @@ class _PasswordFormFild extends State<PasswordFormFild> {
   @override
   Widget build(BuildContext context) {
     return CustomFormField(
+      validator: widget.validator,
       obscureText: isHidden,
       labelText: 'password',
       controller: widget.controller,
