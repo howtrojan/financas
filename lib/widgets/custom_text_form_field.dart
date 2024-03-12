@@ -16,6 +16,7 @@ class CustomFormField extends StatefulWidget {
   final bool? obscureText;
   final List<TextInputFormatter>? inputFormatters;
   final FormFieldValidator<String>? validator;
+  final String? helperText;
 
   const CustomFormField({
     super.key,
@@ -29,6 +30,7 @@ class CustomFormField extends StatefulWidget {
     this.obscureText,
     this.inputFormatters,
     this.validator,
+    this.helperText,
   });
 
   @override
@@ -39,12 +41,31 @@ class _CustomFormFieldState extends State<CustomFormField> {
   final defaultBorder = const OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.lavender));
 
+  String? _helperText;
+
+  @override
+  void initState() {
+    super.initState();
+    _helperText = widget.helperText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding ??
           const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: TextFormField(
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            setState(() {
+              _helperText = null;
+            });
+          } else if (value.isEmpty) {
+            setState(() {
+              _helperText = widget.helperText;
+            });
+          }
+        },
         validator: widget.validator,
         inputFormatters: widget.inputFormatters,
         obscureText: widget.obscureText ?? false,
@@ -53,6 +74,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.none,
         decoration: InputDecoration(
+            helperMaxLines: 3,
+            helperText: _helperText,
             suffixIcon: widget.suffixIcon,
             labelText: widget.labelText.toUpperCase(),
             labelStyle: AppTextStyles.smallText.copyWith(color: AppColors.gray),

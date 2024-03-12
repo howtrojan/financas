@@ -31,8 +31,8 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Text('Comece a controlar',
               textAlign: TextAlign.center,
-              style:
-                  AppTextStyles.mediumText.copyWith(color: AppColors.primary)),
+              style: AppTextStyles.mediumText
+                  .copyWith(color: AppColors.secundary)),
           Text('seus gastos',
               textAlign: TextAlign.center,
               style: AppTextStyles.mediumText
@@ -77,6 +77,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       }
                       return null;
                     },
+                    helperText:
+                        'Deve conter 8 caracteres, um maiúsculo e um número',
                   ),
                   PasswordFormFild(
                     labelText: "Confirme sua senha",
