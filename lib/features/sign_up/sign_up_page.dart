@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:financas/common/utils/utils.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
 import 'package:financas/widgets/password_form_field.dart';
@@ -8,7 +6,6 @@ import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/custom_text_button.dart';
 import 'package:financas/widgets/primary_button.dart';
-import 'package:financas/common/utils/uppercase_text_formatter.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -19,6 +16,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,47 +46,28 @@ class _SignUpPageState extends State<SignUpPage> {
                     inputFormatters: [
                       UpperCaseTextInputFormatter(),
                     ],
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "Esse campo não pode ser vazio";
-                      }
-                      return null;
-                    },
+                    validator: Validator.validateName,
                   ),
                   CustomFormField(
-                    labelText: "Seu Email",
-                    hintText: "email@email.com",
-                    inputFormatters: [
-                      UpperCaseTextInputFormatter(),
-                    ],
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "Esse campo não pode ser vazio";
-                      }
-                      return null;
-                    },
-                  ),
+                      labelText: "Seu Email",
+                      hintText: "email@email.com",
+                      inputFormatters: [
+                        UpperCaseTextInputFormatter(),
+                      ],
+                      validator: Validator.validateEmail),
                   PasswordFormFild(
+                    controller: _passwordController,
                     labelText: "Escolha sua senha",
                     hintText: "******",
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "Esse campo não pode ser vazio";
-                      }
-                      return null;
-                    },
+                    validator: Validator.validatePassword,
                     helperText:
                         'Deve conter 8 caracteres, um maiúsculo e um número',
                   ),
                   PasswordFormFild(
                     labelText: "Confirme sua senha",
                     hintText: "******",
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "Esse campo não pode ser vazio";
-                      }
-                      return null;
-                    },
+                    validator: (value) => Validator.validateConfirmPassword(
+                        value, _passwordController.text),
                   ),
                 ],
               )),
