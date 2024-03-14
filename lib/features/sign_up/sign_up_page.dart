@@ -1,4 +1,6 @@
 import 'package:financas/common/utils/utils.dart';
+import 'package:financas/features/sign_up/sign_up_controller.dart';
+import 'package:financas/features/sign_up/sign_up_state.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
 import 'package:financas/widgets/password_form_field.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,40 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
+  final _controller = SignUpController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller.addListener(() {
+      if (_controller.state is SignUpLoadingState) {
+        showDialog(
+            context: context,
+            builder: (context) => Center(child: CircularProgressIndicator()));
+      }
+      if (_controller.state is SignUpSuccessState) {
+        Navigator.pop(context);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Scaffold(
+                body: Center(child: Text("nova Tela")),
+              ),
+            ));
+      }
+
+      if (_controller.state is SignUpErrorState) {
+        showDialog(
+          context: context,
+          builder: (context) => Container(
+            height: 150,
+            child: Text("Erro ao logar, tente novamente"),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +84,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                     validator: Validator.validateName,
                   ),
-                  CustomFormField(
+                  const CustomFormField(
                       labelText: "Seu Email",
                       hintText: "email@email.com",
-                      inputFormatters: [
-                        UpperCaseTextInputFormatter(),
-                      ],
                       validator: Validator.validateEmail),
                   PasswordFormFild(
                     controller: _passwordController,
@@ -82,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 final valid = _formKey.currentState != null &&
                     _formKey.currentState!.validate();
                 if (valid) {
-                  print('continuar logica de login');
+                  _controller.doSignUp();
                 } else {
                   print('erro ao logar');
                 }
