@@ -1,6 +1,7 @@
 import 'package:financas/common/utils/utils.dart';
 import 'package:financas/features/sign_up/sign_up_controller.dart';
 import 'package:financas/features/sign_up/sign_up_state.dart';
+import 'package:financas/services/mock_auth_service.dart';
 import 'package:financas/widgets/custom_bottom_sheet.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
 import 'package:financas/widgets/password_form_field.dart';
@@ -21,7 +22,18 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-  final _controller = SignUpController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _controller = SignUpController(MockAuthService());
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -47,8 +59,9 @@ class _SignUpPageState extends State<SignUpPage> {
       }
 
       if (_controller.state is SignUpErrorState) {
+        final error = _controller.state as SignUpErrorState;
         Navigator.pop(context);
-        customBottomSheet(context);
+        customBottomSheet(context, error.message);
       }
     });
   }
@@ -76,6 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 children: [
                   CustomFormField(
+                    controller: _nameController,
                     labelText: "Seu Usuário",
                     hintText: "user",
                     inputFormatters: [
@@ -83,7 +97,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                     validator: Validator.validateName,
                   ),
-                  const CustomFormField(
+                  CustomFormField(
+                      controller: _emailController,
                       labelText: "Seu Email",
                       hintText: "email@email.com",
                       validator: Validator.validateEmail),
@@ -114,7 +129,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 final valid = _formKey.currentState != null &&
                     _formKey.currentState!.validate();
                 if (valid) {
-                  _controller.doSignUp();
+                  _controller.signUp(
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
                 } else {
                   print('erro ao logar');
                 }

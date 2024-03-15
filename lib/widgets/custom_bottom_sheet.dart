@@ -3,7 +3,7 @@ import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 
-Future<dynamic> customBottomSheet(BuildContext context) {
+Future<dynamic> customBottomSheet(BuildContext context, String content) {
   return showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -21,8 +21,8 @@ Future<dynamic> customBottomSheet(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                'Erro ao logar!',
+              Text(
+                content,
                 style: AppTextStyles.buttonText,
               ),
               const Padding(padding: EdgeInsets.symmetric(vertical: 20)),

@@ -1,7 +1,12 @@
 import 'package:financas/features/sign_up/sign_up_state.dart';
+import 'package:financas/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class SignUpController extends ChangeNotifier {
+  final AuthService _service;
+
+  SignUpController(this._service);
+
   SignUpState _state = SignUpInitialState();
 
   SignUpState get state => _state;
@@ -11,11 +16,18 @@ class SignUpController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> doSignUp() async {
+  Future<void> signUp(
+      {required String email,
+      required String name,
+      required String password}) async {
     _changeState(SignUpLoadingState());
-    await Future.delayed(const Duration(seconds: 2));
-    print("Usuário Logado");
-    _changeState(SignUpSuccessState());
-    return true;
+
+    try {
+      final result =
+          await _service.signUp(name: name, email: email, password: password);
+      _changeState(SignUpSuccessState());
+    } catch (e) {
+      _changeState(SignUpErrorState(e.toString()));
+    }
   }
 }
