@@ -1,6 +1,7 @@
 import 'package:financas/common/utils/utils.dart';
 import 'package:financas/features/sign_up/sign_up_controller.dart';
 import 'package:financas/features/sign_up/sign_up_state.dart';
+import 'package:financas/widgets/custom_bottom_sheet.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
 import 'package:financas/widgets/password_form_field.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/custom_text_button.dart';
 import 'package:financas/widgets/primary_button.dart';
+import 'package:flutter/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -23,33 +25,30 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller.addListener(() {
       if (_controller.state is SignUpLoadingState) {
         showDialog(
             context: context,
-            builder: (context) => Center(child: CircularProgressIndicator()));
+            builder: (context) => const Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.primary,
+                )));
       }
       if (_controller.state is SignUpSuccessState) {
         Navigator.pop(context);
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Scaffold(
+              builder: (context) => const Scaffold(
                 body: Center(child: Text("nova Tela")),
               ),
             ));
       }
 
       if (_controller.state is SignUpErrorState) {
-        showDialog(
-          context: context,
-          builder: (context) => Container(
-            height: 150,
-            child: Text("Erro ao logar, tente novamente"),
-          ),
-        );
+        Navigator.pop(context);
+        customBottomSheet(context);
       }
     });
   }
