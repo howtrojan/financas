@@ -73,7 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: ListView(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.10,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
           Text('Comece a controlar',
               textAlign: TextAlign.center,
