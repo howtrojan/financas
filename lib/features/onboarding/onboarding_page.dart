@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:financas/common/constants/routes.dart';
 import 'package:financas/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:financas/common/constants/app_colors.dart';
@@ -42,8 +43,10 @@ class OnboardingPage extends StatelessWidget {
                     vertical: MediaQuery.of(context).size.height * 0.016,
                   ),
                   child: PrimaryButton(
-                    text: 'Entrar',
-                    onPressed: () {},
+                    text: 'Iniciar',
+                    onPressed: () {
+                      Navigator.pushNamed(context, NamedRoute.signUp);
+                    },
                   ),
                 ),
                 CustomTextButton(
