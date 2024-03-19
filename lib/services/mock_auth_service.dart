@@ -10,7 +10,8 @@ class MockAuthService implements AuthService {
       if (password.startsWith('123')) {
         throw Exception();
       }
-      return UserModel(id: email.hashCode, email: email, password: password);
+      return UserModel(
+          id: email.hashCode.toString(), email: email, password: password);
     } catch (e) {
       if (password.startsWith('123')) {
         throw 'Erro ao logar. Tente novamente';
@@ -28,7 +29,10 @@ class MockAuthService implements AuthService {
         throw Exception();
       }
       return UserModel(
-          id: email.hashCode, name: name, email: email, password: password);
+          id: email.hashCode.toString(),
+          name: name,
+          email: email,
+          password: password);
     } catch (e) {
       if (password.startsWith('123')) {
         throw 'Senha Insegura. Crie uma senha forte';

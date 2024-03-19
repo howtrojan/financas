@@ -2,7 +2,7 @@ import 'package:financas/common/constants/routes.dart';
 import 'package:financas/common/utils/utils.dart';
 import 'package:financas/features/sign_in/sign_in_state.dart';
 import 'package:financas/features/sign_in/sign_in_controller.dart';
-import 'package:financas/services/mock_auth_service.dart';
+import 'package:financas/locator.dart';
 import 'package:financas/widgets/custom_bottom_sheet.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
 import 'package:financas/widgets/password_form_field.dart';
@@ -25,7 +25,7 @@ class _SignInPageState extends State<SignInPage> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _controller = SignInController(MockAuthService());
+  final _controller = locator.get<SignInController>();
 
   @override
   void dispose() {
