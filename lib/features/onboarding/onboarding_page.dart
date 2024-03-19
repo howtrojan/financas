@@ -46,7 +46,7 @@ class OnboardingPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '...gaste com inteligência',
+                      '...gaste com inteligência.',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.mediumText.copyWith(
                         color: AppColors.secundary,

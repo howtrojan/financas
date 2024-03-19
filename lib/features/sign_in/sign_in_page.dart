@@ -80,7 +80,7 @@ class _SignInPageState extends State<SignInPage> {
               textAlign: TextAlign.center,
               style:
                   AppTextStyles.mediumText.copyWith(color: AppColors.primary)),
-          Text('...de volta',
+          Text('...de volta.',
               textAlign: TextAlign.center,
               style: AppTextStyles.mediumText
                   .copyWith(color: AppColors.secundary)),
