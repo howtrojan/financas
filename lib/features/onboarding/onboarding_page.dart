@@ -22,6 +22,8 @@ class OnboardingPage extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
                 child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.35,
                   child: Image.asset(
                     'assets/images/main.png',
                   ),
@@ -29,8 +31,8 @@ class OnboardingPage extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.center,
-                height: MediaQuery.of(context).size.height * 0.45,
-                color: AppColors.lavender,
+                height: MediaQuery.of(context).size.height * 0.5,
+                color: AppColors.white,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -38,14 +40,18 @@ class OnboardingPage extends StatelessWidget {
                     Text(
                       'Economize mais...',
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.mediumText
-                          .copyWith(color: AppColors.primary),
+                      style: AppTextStyles.mediumText.copyWith(
+                        color: AppColors.primary,
+                        height: 1.0,
+                      ),
                     ),
                     Text(
                       '...gaste com inteligência',
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.mediumText
-                          .copyWith(color: AppColors.secundary),
+                      style: AppTextStyles.mediumText.copyWith(
+                        color: AppColors.secundary,
+                        height: 1.0,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
