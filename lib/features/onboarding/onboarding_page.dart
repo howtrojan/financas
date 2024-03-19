@@ -18,28 +18,34 @@ class OnboardingPage extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                'assets/images/main.png',
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+                child: SizedBox(
+                  child: Image.asset(
+                    'assets/images/main.png',
+                  ),
+                ),
               ),
               Container(
                 alignment: Alignment.center,
-                height: MediaQuery.of(context).size.height * 0.4,
-                color: AppColors.white,
+                height: MediaQuery.of(context).size.height * 0.45,
+                color: AppColors.lavender,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                     Text(
-                      'Economize mais',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.mediumText
-                          .copyWith(color: AppColors.secundary),
-                    ),
-                    Text(
-                      'Gaste com inteligência',
+                      'Economize mais...',
                       textAlign: TextAlign.center,
                       style: AppTextStyles.mediumText
                           .copyWith(color: AppColors.primary),
+                    ),
+                    Text(
+                      '...gaste com inteligência',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.mediumText
+                          .copyWith(color: AppColors.secundary),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -49,12 +55,14 @@ class OnboardingPage extends StatelessWidget {
                       child: PrimaryButton(
                         text: 'Iniciar',
                         onPressed: () {
-                          Navigator.pushNamed(context, NamedRoute.signUp);
+                          Navigator.pushNamed(context, NamedRoute.signIn);
                         },
                       ),
                     ),
                     CustomTextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, NamedRoute.signUp);
+                      },
                       children: [
                         Text(
                           'Não tem conta?',

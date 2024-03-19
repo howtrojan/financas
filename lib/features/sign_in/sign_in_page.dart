@@ -1,7 +1,7 @@
 import 'package:financas/common/constants/routes.dart';
 import 'package:financas/common/utils/utils.dart';
-import 'package:financas/features/sign_up/sign_up_controller.dart';
-import 'package:financas/features/sign_up/sign_up_state.dart';
+import 'package:financas/features/sign_in/sign_in_state.dart';
+import 'package:financas/features/sign_in/sign_in_controller.dart';
 import 'package:financas/services/mock_auth_service.dart';
 import 'package:financas/widgets/custom_bottom_sheet.dart';
 import 'package:financas/widgets/custom_text_form_field.dart';
@@ -11,20 +11,21 @@ import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/widgets/custom_text_button.dart';
 import 'package:financas/widgets/primary_button.dart';
+import 'package:flutter/widgets.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _controller = SignUpController(MockAuthService());
+  final _controller = SignInController(MockAuthService());
 
   @override
   void dispose() {
@@ -39,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     _controller.addListener(() {
-      if (_controller.state is SignUpLoadingState) {
+      if (_controller.state is SignInLoadingState) {
         showDialog(
             context: context,
             builder: (context) => const Center(
@@ -47,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   color: AppColors.primary,
                 )));
       }
-      if (_controller.state is SignUpSuccessState) {
+      if (_controller.state is SignInSuccessState) {
         Navigator.pop(context);
         Navigator.push(
             context,
@@ -58,8 +59,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ));
       }
 
-      if (_controller.state is SignUpErrorState) {
-        final error = _controller.state as SignUpErrorState;
+      if (_controller.state is SignInErrorState) {
+        final error = _controller.state as SignInErrorState;
         Navigator.pop(context);
         customBottomSheet(context, error.message);
       }
@@ -75,11 +76,11 @@ class _SignUpPageState extends State<SignUpPage> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.05,
           ),
-          Text('Comece a controlar...',
+          Text('Seja Bem Vindo...',
               textAlign: TextAlign.center,
               style:
                   AppTextStyles.mediumText.copyWith(color: AppColors.primary)),
-          Text('...seus gastos',
+          Text('...de volta',
               textAlign: TextAlign.center,
               style: AppTextStyles.mediumText
                   .copyWith(color: AppColors.secundary)),
@@ -90,77 +91,66 @@ class _SignUpPageState extends State<SignUpPage> {
             child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 height: MediaQuery.of(context).size.height * 0.2,
-                child: Image.asset('assets/images/signUp.png')),
+                child: Image.asset('assets/images/SignIn.png')),
           ),
-          Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CustomFormField(
-                    controller: _nameController,
-                    labelText: "Seu Usuário",
-                    hintText: "user",
-                    inputFormatters: [
-                      UpperCaseTextInputFormatter(),
-                    ],
-                    validator: Validator.validateName,
-                  ),
-                  CustomFormField(
-                      controller: _emailController,
-                      labelText: "Seu Email",
-                      hintText: "email@email.com",
-                      validator: Validator.validateEmail),
-                  PasswordFormFild(
-                    controller: _passwordController,
-                    labelText: "Escolha sua senha",
-                    hintText: "******",
-                    validator: Validator.validatePassword,
-                    helperText:
-                        'Deve conter 8 caracteres, um maiúsculo e um número',
-                  ),
-                  PasswordFormFild(
-                    labelText: "Confirme sua senha",
-                    hintText: "******",
-                    validator: (value) => Validator.validateConfirmPassword(
-                        value, _passwordController.text),
-                  ),
-                ],
-              )),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * 0.05,
+            ),
+            child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CustomFormField(
+                        controller: _emailController,
+                        labelText: "Seu Email",
+                        hintText: "email@email.com",
+                        validator: Validator.validateEmail),
+                    PasswordFormFild(
+                      controller: _passwordController,
+                      labelText: "Sua senha",
+                      hintText: "******",
+                      validator: Validator.validatePassword,
+                      helperText:
+                          'Deve conter 8 caracteres, um maiúsculo e um número',
+                    ),
+                  ],
+                )),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.height * 0.032,
               vertical: MediaQuery.of(context).size.height * 0.016,
             ),
             child: PrimaryButton(
-              text: 'Cadastrar',
+              text: 'Entrar',
               onPressed: () {
                 final valid = _formKey.currentState != null &&
                     _formKey.currentState!.validate();
                 if (valid) {
-                  _controller.signUp(
-                    name: _nameController.text,
+                  _controller.signIn(
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
                 } else {
-                  print('erro ao logar');
+                  print('erro ao entrar');
                 }
               },
             ),
           ),
           CustomTextButton(
             onPressed: () =>
-                {Navigator.popAndPushNamed(context, NamedRoute.signIn)},
+                {Navigator.popAndPushNamed(context, NamedRoute.signUp)},
             children: [
               Text(
-                'Ja tem uma conta?',
+                'Não tem conta?',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.smallText.copyWith(
                   color: AppColors.darkGrey,
                 ),
               ),
               Text(
-                'Entrar',
+                'Cadastre-se',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.smallText.copyWith(
                   color: AppColors.primary,
