@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class SignInController extends ChangeNotifier {
   final AuthService _service;
+  final secureStorage = const SecureStorageService();
 
   SignInController(this._service);
 
@@ -18,7 +19,6 @@ class SignInController extends ChangeNotifier {
   }
 
   Future<void> signIn({required String email, required String password}) async {
-    const secureStorage = SecureStorageService();
     _changeState(SignInLoadingState());
 
     try {

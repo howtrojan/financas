@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class SignUpController extends ChangeNotifier {
   final AuthService _service;
+  final secureStorage = const SecureStorageService();
 
   SignUpController(this._service);
 
@@ -21,7 +22,6 @@ class SignUpController extends ChangeNotifier {
       {required String email,
       required String name,
       required String password}) async {
-    final secureStorage = const SecureStorageService();
     _changeState(SignUpLoadingState());
 
     try {
