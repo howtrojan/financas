@@ -1,8 +1,9 @@
-import 'dart:async';
-
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/common/constants/routes.dart';
+import 'package:financas/features/splash/splash_controller.dart';
+import 'package:financas/features/splash/splash_state.dart';
+import 'package:financas/locator.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatefulWidget {
@@ -13,19 +14,36 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final _splashController = locator.get<SplashController>();
+
   @override
   void initState() {
     super.initState();
-    init();
+    _splashController.isUserLogged();
+    _splashController.addListener(_handleSplashStateChange);
   }
 
-  Timer init() {
-    return Timer(const Duration(seconds: 2), navigatoToOnboarding);
+  @override
+  void dispose() {
+    _splashController.dispose();
+    super.dispose();
   }
 
-  void navigatoToOnboarding() {
-    Navigator.pushReplacementNamed(context, NamedRoute.initial);
+  void _handleSplashStateChange() {
+    if (_splashController.state is AuthenticatedUser) {
+      Navigator.pushReplacementNamed(
+        context,
+        NamedRoute.home,
+      );
+    } else {
+      Navigator.pushReplacementNamed(
+        context,
+        NamedRoute.initial,
+      );
+    }
   }
+
+  void _handleSyncStateChange() {}
 
   @override
   Widget build(BuildContext context) {
