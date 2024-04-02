@@ -22,7 +22,9 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     _splashController.isUserLogged();
     _splashController.addListener(_handleSplashStateChange);
-    WidgetsBinding.instance.addPostFrameCallback((_) => Sizes.init(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Sizes.init(context);
+    });
   }
 
   @override
@@ -35,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
     if (_splashController.state is AuthenticatedUser) {
       Navigator.pushReplacementNamed(
         context,
-        NamedRoute.home,
+        NamedRoute.homePage,
       );
     } else {
       Navigator.pushReplacementNamed(
