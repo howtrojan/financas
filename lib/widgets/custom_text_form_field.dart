@@ -80,6 +80,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             labelText: widget.labelText.toUpperCase(),
             labelStyle: AppTextStyles.smallText.copyWith(color: AppColors.gray),
             hintText: widget.hintText,
+            hintStyle: const TextStyle(color: Colors.grey),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             errorBorder: const OutlineInputBorder(
               borderSide:

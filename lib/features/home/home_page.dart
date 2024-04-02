@@ -1,6 +1,9 @@
 import 'package:financas/common/constants/app_colors.dart';
 import 'package:financas/common/constants/app_text_styles.dart';
 import 'package:financas/common/extensions/extensions.dart';
+import 'package:financas/features/home/home_controller.dart';
+import 'package:financas/features/home/home_state.dart';
+import 'package:financas/locator.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +17,18 @@ class _MyWidgetState extends State<HomePage> {
   double get textScaleFactor =>
       MediaQuery.of(context).size.width < 360 ? 0.7 : 1.0;
   double get iconSize => MediaQuery.of(context).size.width < 360 ? 16.0 : 24.0;
+
+  final controller = locator.get<HomeController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.getAllTransactions();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Sizes.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -222,7 +237,7 @@ class _MyWidgetState extends State<HomePage> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -244,43 +259,64 @@ class _MyWidgetState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemCount: 4,
-                    itemBuilder: (context, index) {
-                      final colorF = index % 2 == 0 ? Colors.green : Colors.red;
-                      final value =
-                          index % 2 == 0 ? "+ R\$100,00" : "- R\$100,00";
-                      return ListTile(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                        leading: Container(
-                          decoration: const BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0))),
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Icon(
-                            Icons.monetization_on_outlined,
+                  child: AnimatedBuilder(
+                    animation: controller,
+                    builder: (context, _) {
+                      if (controller.state is HomeStateLoading) {
+                        return const Center(
+                          child: SizedBox(
+                            width: 50, // Defina a largura do contêiner
+                            height: 50, // Defina a altura do contêiner
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        title: const Text(
-                          'Transferência',
-                          style: AppTextStyles.smallText,
-                        ),
-                        subtitle: const Text(
-                          'Hoje',
-                          style: AppTextStyles.smallText,
-                        ),
-                        trailing: Text(
-                          value,
-                          style: AppTextStyles.smallText.apply(color: colorF),
-                        ),
+                        );
+                      }
+                      if (controller.state is HomeStateError) {
+                        return const Center(
+                            child: Text('Não existem transações'));
+                      }
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: controller.transactions.length,
+                        itemBuilder: (context, index) {
+                          final item = controller.transactions[index];
+                          final colorF =
+                              item.value.isNegative ? Colors.red : Colors.green;
+                          final value = "R\$${item.value.toStringAsFixed(2)}";
+                          return ListTile(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            leading: Container(
+                              decoration: const BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0))),
+                              padding: const EdgeInsets.all(8.0),
+                              child: const Icon(
+                                Icons.monetization_on_outlined,
+                              ),
+                            ),
+                            title: Text(
+                              item.category,
+                              style: AppTextStyles.smallText,
+                            ),
+                            subtitle: Text(
+                              DateTime.fromMicrosecondsSinceEpoch(item.date)
+                                  .toString(),
+                              style: AppTextStyles.smallText,
+                            ),
+                            trailing: Text(
+                              value,
+                              style:
+                                  AppTextStyles.smallText.apply(color: colorF),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),

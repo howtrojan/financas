@@ -93,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   CustomFormField(
                     controller: _nameController,
                     labelText: "Seu Usuário",
-                    hintText: "user",
+                    hintText: "usuário",
                     inputFormatters: [
                       UpperCaseTextInputFormatter(),
                     ],
