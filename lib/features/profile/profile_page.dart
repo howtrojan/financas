@@ -1,4 +1,5 @@
-import 'package:financas/common/constants/routes.dart';
+import 'package:financas/locator.dart';
+import 'package:financas/services/auth_service.dart';
 import 'package:financas/services/secure_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +19,15 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Profile"),
+            const Text("Perfil"),
             ElevatedButton(
-                onPressed: () {
-                  _secureStorage.deleteOne(key: "CURRENT_USER").then((_) =>
-                      Navigator.popAndPushNamed(context, NamedRoute.initial));
+                onPressed: () async {
+                  await locator.get<AuthService>().signOut();
+                  await _secureStorage.deleteAll();
+                  if (mounted) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                  }
                 },
                 child: const Text("Logout"))
           ],
